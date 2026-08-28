@@ -36,7 +36,9 @@
 **b) El proyecto base expone `GET /api/v1/autores` y guarda el estado de la sesión del usuario solo en el JWT que el cliente envía en cada petición. Explique qué restricción concreta se está cumpliendo con esa decisión y qué consecuencia práctica tiene para escalar el sistema a varios servidores detrás de un balanceador. (3 puntos)**
 
 **Respuesta:**
+Al exponer `GET /api/v1/mascotas` y mantener toda la información de sesión únicamente dentro del JWT que viaja en cada solicitud, biopet está respetando la restricción de **ausencia de estado**: el backend no retiene ningún dato de sesión de un usuario entre una llamada y otra.
 
+Esto tiene una consecuencia directa sobre la escalabilidad: como ninguna instancia del servidor necesita "recordar" quién es cada usuario, **el sistema puede replicarse en múltiples nodos detrás de un balanceador sin coordinación adicional**, ya que cualquiera de ellos puede atender cualquier solicitud entrante. Se elimina así la necesidad de sesiones pegajosas (*sticky sessions*) o de un almacén de sesiones compartido, lo que facilita agregar o retirar instancias según la demanda.
 
 
 **c) De las seis restricciones, indique cuál es opcional y dé un ejemplo real de una API que la use. (2 puntos)**
