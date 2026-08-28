@@ -85,5 +85,67 @@ public class LibroController {
         return ApiResponse.ok(mapper.aRespuesta(servicio.buscarPorId(id)), "Libro encontrado");
     }
 
-    
+    /**
+     * B2. POST /api/v1/libros
+     * El cuerpo invalido lo convierte GlobalExceptionHandler en un 400 Problem
+     * Details con el arreglo errors poblado: aqui no se escribe ese manejo.
+     */
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    @Transactional
+    public ResponseEntity<ApiResponse<LibroResponse>> crear(@Valid @RequestBody LibroRequest solicitud) {
+        Libro creado = servicio.crear(solicitud);
+        LibroResponse cuerpo = mapper.aRespuesta(creado);
+        return ResponseEntity
+                .created(URI.create("/api/v1/libros/" + creado.getId()))
+                .body(ApiResponse.ok(cuerpo, "Libro creado"));
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Transactional
+    public ApiResponse<LibroResponse> actualizar(@PathVariable Long id,
+                                                 @Valid @RequestBody LibroRequest solicitud) {
+        return ApiResponse.ok(mapper.aRespuesta(servicio.actualizar(id, solicitud)), "Libro actualizado");
+    }
+
+    /**
+     * Borrado logico: la Unidad III fijo que el catalogo no elimina filas.
+     */
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        servicio.desactivar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * B3. GET /api/v1/libros/{id}/enriquecido
+     *
+     * Si el proveedor no conoce el ISBN (404), OpenLibraryClient devuelve null y
+     * este endpoint responde 200 con el libro local y los campos externos en null.
+     * Si el proveedor falla de verdad (5xx, 4xx distinto de 404 o timeout), el
+     * cliente lanza ServicioExternoException y el manejador global la traduce a 502.
+     */
+    @GetMapping("/{id}/enriquecido")
+    @Transactional(readOnly = true)
+    public ApiResponse<LibroEnriquecidoResponse> enriquecido(@PathVariable Long id) {
+        Libro libro = servicio.buscarPorId(id);
+        LibroResponse local = mapper.aRespuesta(libro);
+
+        OpenLibraryResponse externo = openLibrary.consultarPorIsbn(libro.getIsbn());
+
+        LibroEnriquecidoResponse cuerpo = (externo == null)
+                ? new LibroEnriquecidoResponse(local, null, null, null, null)
+                : new LibroEnriquecidoResponse(local,
+                        externo.title(),
+                        externo.urlPortada(),
+                        externo.number_of_pages(),
+                        externo.publish_date());
+
+        String mensaje = (externo == null)
+                ? "Libro sin metadatos externos disponibles"
+                : "Libro enriquecido con Open Library";
+        return ApiResponse.ok(cuerpo, mensaje);
+    }
 }
