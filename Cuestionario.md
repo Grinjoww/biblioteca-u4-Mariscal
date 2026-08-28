@@ -70,6 +70,13 @@ La confusión radica en tratar "firmar" como sinónimo de "ocultar". **Firmar** 
 **c) El JWT es *stateless* por diseño, lo que genera un problema conocido: no se puede invalidar un token antes de que expire. Describa dos estrategias distintas para revocarlo y señale la desventaja de cada una. (3 puntos)**
 
 **Respuesta:**
+1. **Registro de tokens invalidados** (lista negra) mantenido en un almacén de acceso rápido, con un tiempo de vida igual al que le resta al token original.
+
+ - *Desventaja*: obliga a introducir estado nuevamente en el lado del servidor y agrega una verificación adicional en cada petición, además de requerir sincronización si hay múltiples instancias.
+
+2. **Combinación de token de acceso de corta duración y token de refresco controlado en base de datos**, donde este último sí puede eliminarse para cortar el acceso.
+ - *Desventaja*: incrementa la complejidad del sistema (dos tipos de token, endpoint de renovación, rotación) y el token de acceso ya emitido seguirá siendo válido hasta su corta expiración, aun cuando se intente revocar antes.
+
 
 
 
