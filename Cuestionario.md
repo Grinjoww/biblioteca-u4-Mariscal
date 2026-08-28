@@ -12,11 +12,11 @@
 
 | Campo | Valor |
 |---|---|
-| Apellidos y nombres | |
-| Número de carnet | |
-| Correo institucional | |
-| Fecha | |
-| URL del repositorio | |
+| Apellidos y nombres | Mariscal Cabrera Jaime Josué|
+| Número de carnet | 1250710835 |
+| Correo institucional | jmariscalc@uteq.edu.ec |
+| Fecha | 28/8/2026 |
+| URL del repositorio | https://github.com/Grinjoww/biblioteca-u4-Mariscal |
 
 ---
 
@@ -25,7 +25,7 @@
 **a) Enuncie las seis restricciones del estilo arquitectónico REST según Fielding. (3 puntos)**
 
 **Respuesta:**
-
+Cliente-servidor: es tipo la separación de responsabilidades, como por ejemplo el cliente (app web/movil de la clínica), maneja el interfaz y el servidor (biopet) 
 
 
 **b) El proyecto base expone `GET /api/v1/autores` y guarda el estado de la sesión del usuario solo en el JWT que el cliente envía en cada petición. Explique qué restricción concreta se está cumpliendo con esa decisión y qué consecuencia práctica tiene para escalar el sistema a varios servidores detrás de un balanceador. (3 puntos)**
