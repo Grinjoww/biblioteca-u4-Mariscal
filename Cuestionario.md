@@ -146,12 +146,12 @@ Para cada escenario indique el código HTTP correcto y explique en una línea po
 
 | # | Escenario | Código | Justificación (una línea) |
 |---|---|---|---|
-| a | `GET /api/v1/libros/999999` y ese identificador no existe | | |
-| b | `POST /api/v1/libros` sin cabecera `Authorization` | | |
-| c | Usuario autenticado con rol `LECTOR` envía `POST /api/v1/libros` | | |
-| d | `POST /api/v1/libros` con el campo `titulo` vacío | | |
-| e | Prestar un libro a un socio que ya tiene tres préstamos activos | | |
-| f | La API de Open Library no responde dentro del *timeout* configurado | | |
+| a | `GET /api/v1/libros/999999` y ese identificador no existe | | Se consulta una mascota con un id que no existe → **404 Not Found**, porque el recurso solicitado sencillamente no está registrado en el sistema. |
+| b | `POST /api/v1/libros` sin cabecera `Authorization` | | Se envía una solicitud para crear un recurso sin incluir el token de autorización → **401 Unauthorized**, ya que el sistema no puede determinar quién realiza la petición al faltar la credencial. |
+| c | Usuario autenticado con rol `LECTOR` envía `POST /api/v1/libros` | | Un usuario con un rol de menor privilegio (por ejemplo, recepcionista) intenta ejecutar una acción reservada a otro rol → **403 Forbidden**, pues aunque el usuario está identificado, no cuenta con los permisos necesarios para esa operación.|
+| d | `POST /api/v1/libros` con el campo `titulo` vacío | | Se envía una solicitud de creación con un campo obligatorio vacío → **400 Bad Request**, porque los datos enviados no cumplen las reglas de validación exigidas.|
+| e | Prestar un libro a un socio que ya tiene tres préstamos activos | | Se intenta registrar una nueva cita para alguien que ya alcanzó el límite permitido de citas activas → **409 Conflict**, dado que la solicitud es correcta en su forma pero contradice el estado actual del recurso según una regla del negocio.|
+| f | La API de Open Library no responde dentro del *timeout* configurado | |El servicio externo consultado no contesta dentro del tiempo límite establecido → **504 Gateway Timeout**, ya que el propio servidor de biopet actúa como intermediario ante un proveedor externo que no respondió a tiempo.|
 
 **g) Explique por qué devolver `200 OK` con un cuerpo `{"success": false}` es un error de diseño, y qué restricción de REST se incumple al hacerlo. (2 puntos)**
 
