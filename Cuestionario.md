@@ -114,7 +114,10 @@ La confusión radica en tratar "firmar" como sinónimo de "ocultar". **Firmar** 
 **a) Describa el patrón *cache-aside* en sus cuatro pasos, desde que llega la petición hasta que se responde. (3 puntos)**
 
 **Respuesta:**
-
+1. Al recibir la solicitud, el sistema **revisa primero si el dato ya está en caché**.
+2. Si el dato está presente y aún vigente (*hit*), se **entrega directamente desde la caché**, sin consultar la fuente original.
+3. Si no está o ya expiró (*miss*), se **recurre a la fuente original** (base de datos propia o servicio externo) para obtenerlo.
+4. Una vez obtenido, se **almacena en la caché con su tiempo de vida definido** y luego se **envía la respuesta** al cliente.
 
 
 **b) Justifique técnicamente por qué el TTL de `openlibrary` es doce veces mayor que el de `libros`, y qué criterio general debe guiar la elección de un TTL. (3 puntos)**
