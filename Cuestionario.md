@@ -63,6 +63,7 @@ Es el **código bajo demanda**. Un ejemplo concreto es el de servicios web que e
 **b) Un compañero afirma: «como el JWT va firmado, puedo guardar en el *payload* la contraseña del usuario sin riesgo». Explique por qué está equivocado, precisando la diferencia entre firmar y cifrar. (2 puntos)**
 
 **Respuesta:**
+La confusión radica en tratar "firmar" como sinónimo de "ocultar". **Firmar** un JWT únicamente certifica que su contenido no ha sido manipulado y que fue emitido por quien corresponde, pero el payload permanece **codificado en Base64url, no cifrado**, por lo que cualquiera puede decodificarlo y leerlo sin esfuerzo. **Cifrar**, en cambio, sí convierte el contenido en algo ilegible sin poseer la clave correspondiente. Por eso, guardar la contraseña de un usuario dentro del payload la deja expuesta en texto plano ante cualquiera que capture o inspeccione el token.
 
 
 
