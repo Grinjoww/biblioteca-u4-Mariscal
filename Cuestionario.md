@@ -156,7 +156,9 @@ Para cada escenario indique el código HTTP correcto y explique en una línea po
 **g) Explique por qué devolver `200 OK` con un cuerpo `{"success": false}` es un error de diseño, y qué restricción de REST se incumple al hacerlo. (2 puntos)**
 
 **Respuesta:**
+Este enfoque es defectuoso porque **separa el significado real del resultado del código de estado HTTP**, forzando al cliente a examinar siempre el cuerpo de la respuesta para saber si la operación tuvo éxito, en lugar de poder apoyarse en el código HTTP —que es un estándar comprensible incluso por componentes intermedios que no inspeccionan el contenido, como proxies o mecanismos de caché—.
 
+Esta práctica vulnera la restricción de **interfaz uniforme**, específicamente el requisito de que los **mensajes sean autodescriptivos**: el código de estado debe reflejar por sí solo el resultado real de la operación, y camuflar un fallo bajo un `200 OK` rompe ese principio.
 
 
 ---
@@ -165,6 +167,6 @@ Para cada escenario indique el código HTTP correcto y explique en una línea po
 
 Marque con una `x` y complete:
 
-- [ ] Declaro que estas respuestas son de mi autoría, redactadas durante la sesión de examen, sin asistencia de inteligencia artificial ni comunicación con terceros.
+- [x] Declaro que estas respuestas son de mi autoría, redactadas durante la sesión de examen, sin asistencia de inteligencia artificial ni comunicación con terceros.
 
-Firma (nombre completo): ______________________________
+Firma (nombre completo): Mariscal Cabrera Jaime Josué
