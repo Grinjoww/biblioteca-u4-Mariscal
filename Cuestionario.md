@@ -100,6 +100,8 @@ La confusión radica en tratar "firmar" como sinónimo de "ocultar". **Firmar** 
 **b) El Servicio de Rentas Internas del Ecuador expone la autorización de comprobantes electrónicos mediante servicios SOAP. Explique dos razones técnicas por las que una institución de ese tipo mantiene SOAP en lugar de migrar a REST. (3 puntos)**
 
 **Respuesta:**
+1. **Robustez en seguridad y validación formal**: el ecosistema WS-Security ofrece firma digital y no repudio integrados al mensaje XML, respaldados por esquemas XSD estrictos definidos en el WSDL —elementos indispensables cuando se autorizan comprobantes tributarios— sin que REST cuente todavía con un estándar equivalente tan consolidado.
+2. **Garantías de entrega y consistencia transaccional**: extensiones como WS-ReliableMessaging o WS-AtomicTransaction aseguran que un mensaje se procese exactamente una vez y que las transacciones distribuidas mantengan consistencia, algo crítico en un sistema fiscal y que en REST tendría que implementarse manualmente sin soporte nativo.
 
 
 
