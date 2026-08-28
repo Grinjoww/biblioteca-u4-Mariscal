@@ -133,7 +133,7 @@ En cambio, los datos que gestiona directamente biopet (como el estado de una mas
 **c) Explique por qué nunca debe almacenarse en caché la respuesta de un fallo del servicio externo, y describa qué le ocurriría al sistema si se hiciera. (2 puntos)**
 
 **Respuesta:**
-
+Guardar en caché la respuesta de un error significa que **ese mismo error se repetirá en todas las solicitudes siguientes durante todo el tiempo de vida configurado**, incluso si el servicio externo ya volvió a funcionar normalmente. En la práctica, esto **transforma una falla momentánea en una interrupción prolongada y artificial** del servicio, ya que el sistema queda "atrapado" respondiendo con el error cacheado hasta que este expire, sin ninguna posibilidad de recuperarse automáticamente antes de ese momento.
 
 
 ---
