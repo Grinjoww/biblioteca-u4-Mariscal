@@ -44,7 +44,12 @@ Esto tiene una consecuencia directa sobre la escalabilidad: como ninguna instanc
 **c) De las seis restricciones, indique cuál es opcional y dé un ejemplo real de una API que la use. (2 puntos)**
 
 **Respuesta:**
+1. **Registro de tokens invalidados** (lista negra) mantenido en un almacén de acceso rápido, con un tiempo de vida igual al que le resta al token original.
 
+ - *Desventaja*: obliga a introducir estado nuevamente en el lado del servidor y agrega una verificación adicional en cada petición, además de requerir sincronización si hay múltiples instancias.
+
+2. **Combinación de token de acceso de corta duración y token de refresco controlado en base de datos**, donde este último sí puede eliminarse para cortar el acceso.
+ - *Desventaja*: incrementa la complejidad del sistema (dos tipos de token, endpoint de renovación, rotación) y el token de acceso ya emitido seguirá siendo válido hasta su corta expiración, aun cuando se intente revocar antes.
 
 
 ---
