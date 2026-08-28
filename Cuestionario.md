@@ -54,6 +54,9 @@ Es el **código bajo demanda**. Un ejemplo concreto es el de servicios web que e
 **a) Un JWT tiene tres partes separadas por puntos. Nómbrelas en orden e indique qué contiene cada una. (3 puntos)**
 
 **Respuesta:**
+1. **Header**: identifica el tipo de token y el algoritmo criptográfico empleado para firmarlo (por ejemplo, HS256).
+2. **Payload**: contiene las afirmaciones (*claims*) sobre el usuario y el contexto de la sesión —en biopet, por ejemplo, el identificador del usuario, su rol (veterinario, recepcionista, etc.) y las marcas de tiempo de emisión y expiración.
+3. **Signature**: se calcula aplicando el algoritmo del header sobre la concatenación codificada de header y payload usando una clave del emisor; sirve para comprobar que el token no ha sido modificado y que proviene de una fuente legítima.
 
 
 
