@@ -90,12 +90,12 @@ La confusión radica en tratar "firmar" como sinónimo de "ocultar". **Firmar** 
 
 | Criterio | SOAP | REST |
 |---|---|---|
-| Formato del mensaje | | |
-| Contrato de descripción | | |
-| Sobrecarga de serialización | | |
-| Tipado | | |
-| Facilidad de consumo desde un cliente móvil | | |
-| Manejo de errores | | |
+| Formato del mensaje | Envelope XML rígido y normado | Cualquier formato ligero, típicamente JSON |
+| Contrato de descripción | WSDL, definición formal y estricta | OpenAPI/Swagger, documentación flexible no obligatoria |
+| Sobrecarga de serialización | Considerable, por las etiquetas y espacios de nombres XML | Mínima, gracias a la compacidad del JSON |
+| Tipado | Estricto, validado contra esquemas XSD | Flexible o dinámico según el formato usado |
+| Consumo desde dispositivos móviles | Complicado, por el peso de los mensajes y el procesamiento XML | Sencillo, por el bajo consumo de datos y batería |
+| Manejo de errores | A través de un elemento `<Fault>` normado dentro del propio mensaje | Mediante códigos de estado HTTP acompañados de un cuerpo descriptivo |
 
 **b) El Servicio de Rentas Internas del Ecuador expone la autorización de comprobantes electrónicos mediante servicios SOAP. Explique dos razones técnicas por las que una institución de ese tipo mantiene SOAP en lugar de migrar a REST. (3 puntos)**
 
