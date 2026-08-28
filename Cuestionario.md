@@ -25,7 +25,12 @@
 **a) Enuncie las seis restricciones del estilo arquitectónico REST según Fielding. (3 puntos)**
 
 **Respuesta:**
-Cliente-servidor: es tipo la separación de responsabilidades, como por ejemplo el cliente (app web/movil de la clínica), maneja el interfaz y el servidor (biopet) 
+1. *Cliente-servidor*: es tipo la separación de responsabilidades; el cliente (app web/móvil de la clínica) maneja la interfaz, y el servidor (biopet en mi caso de PFC) el almacenamiento y la lógica de negocio veterinario, evolucionando cada lado por separado.
+2. *Sin estado (stateless)*: cada petición del cliente debe contener toda la información necesaria para procesarla, sin que el servidor dependa de contexto guardado de peticiones hechas anteriormente.
+3. *Cacheable*: las respuestas deben indicar si pueden almacenarse en caché, para reutilizarlas y reducir carga/latencia.
+4. *Interfaz uniforme*: contrato consistente de acceso a los recursos (mascotas, propietarios, citas, historiales), con identificación de recursos, manipulación por representaciones y mensajes autodescriptivos.
+5. *Sistema en capas*: el cliente no distingue si habla directamente con el servidor de biopet o con un intermediario (gateway, balanceador, proxy de caché).
+6. *Código bajo demanda (opcional)*: el servidor puede enviar código ejecutable al cliente para extender su funcionalidad
 
 
 **b) El proyecto base expone `GET /api/v1/autores` y guarda el estado de la sesión del usuario solo en el JWT que el cliente envía en cada petición. Explique qué restricción concreta se está cumpliendo con esa decisión y qué consecuencia práctica tiene para escalar el sistema a varios servidores detrás de un balanceador. (3 puntos)**
