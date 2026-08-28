@@ -123,6 +123,10 @@ La confusión radica en tratar "firmar" como sinónimo de "ocultar". **Firmar** 
 **b) Justifique técnicamente por qué el TTL de `openlibrary` es doce veces mayor que el de `libros`, y qué criterio general debe guiar la elección de un TTL. (3 puntos)**
 
 **Respuesta:**
+Los datos que provienen de un servicio externo (como información general de razas o especies) **cambian muy raramente** y su consulta implica una llamada de red más costosa, con posibles límites de uso impuestos por el proveedor; por eso conviene mantenerlos en caché durante un período largo, minimizando las llamadas externas.
+
+En cambio, los datos que gestiona directamente biopet (como el estado de una mascota o la disponibilidad de una cita) **se modifican constantemente** durante la operación diaria de la clínica, por lo que un tiempo de vida corto es necesario para no mostrar información obsoleta.
+
 
 
 
